@@ -9,8 +9,8 @@
   <meta name="author" content="DAVID DURAN VALLEJO">
   <title>TORRENTS UNIVERSITY
   </title>
-  <link rel="apple-touch-icon" href="{{asset('app-assets/images/ico/apple-icon-120.png')}}">
-  <link rel="shortcut icon" type="image/x-icon" href="{{asset('app-assets/images/ico/logon.ico')}}">
+  <link rel="apple-touch-icon" href="{{asset('logos/torrens-university-australia-logo.svg')}}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{asset('logos/torrens-university-australia-logo.svg')}}">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Quicksand:300,400,500,700"
   rel="stylesheet">
   <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
@@ -59,8 +59,8 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
         <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
         <li class="nav-item mr-auto">
           <a class="navbar-brand" href="{{route('home')}}">
-            <img class="brand-logo" alt="modern admin logo" src="{{asset('app-assets/images/logo/logo3.png')}}">
-            <h3 class="brand-text">TORRENTS UNIVERSITY</h3>
+            <img class="brand-logo" alt="modern admin logo" src="{{asset('logos/torrens-university-australia-logo.svg')}}">
+            <h3 class="brand-text"></h3>
           </a>
         </li>
         <li class="nav-item d-none d-md-block float-right"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="toggle-icon ft-toggle-right font-medium-3 white" data-ticon="ft-toggle-right"></i></a></li>
