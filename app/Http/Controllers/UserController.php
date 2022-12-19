@@ -17,27 +17,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-
-        // $search = $request->search;
-
-
-        // $users = User::where('name', 'LIKE', '%' . $search . '%')
-        //     ->orwhere('last_name', 'LIKE', '%' . $search . '%')
-        //     ->orwhere('email', 'LIKE', '%' . $search . '%')
-        //     ->orderBy('id', 'ASC')
-        //     ->get();
+    public function index()    {
 
         $users = User::select('id','name','last_name','phone','email','status')
             ->orderBy('id', 'ASC')
             ->get();
 
             $users->toJson();
-           
-      
 
-        // return $users;
         return view('users.index', compact('users'));
 
     }
@@ -60,6 +47,7 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
        
     }
+    
     public function store(Request $request)
     {
         $User = new User;
