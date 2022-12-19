@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
@@ -19,4 +20,9 @@ class Task extends Model
             'user_id',
             'finished'
 	];
+
+    public function tasks()
+    {
+        return Task::whereUserId(Auth::user()->id)->orderBy('id','desc')->count();         
+    }
 }

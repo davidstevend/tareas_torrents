@@ -44,12 +44,21 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->isUser()) {
+            return redirect()
+                ->route('home')
+                ->with('info', 'SIN PERMISOS!!!');
+        }
         return view('users.create');
     }
 
     public function edit(User $user)
     {
-        // dd($user);
+        if (Auth::user()->isUser()) {
+            return redirect()
+                ->route('home')
+                ->with('info', 'SIN PERMISOS!!!');
+        }
         return view('users.edit', compact('user'));
     }
 
