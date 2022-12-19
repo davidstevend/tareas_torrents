@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,26 @@ use App\Http\Controllers\UserController;
 |
 */
 
+// Route::get('/', function () {
+//     return view('/home');
+// });
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
+    // return view('/home');
 });
 
 Auth::routes();
 
+Route::get('logout', function () {
+    auth()->logout();
+    Session()->flush();
+
+    return Redirect::to('/');
+})->name('logout');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //**************** Usuarios ******************* */
 Route::resource('users', UserController::class)->names('users');
+
+//**************** tAREAS ******************* */
 Route::resource('tasks', TaskController::class)->names('tasks');
