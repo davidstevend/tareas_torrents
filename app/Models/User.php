@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'last_name',
+        'phone',
         'role_id',
         'email',
         'password',
@@ -46,7 +47,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        if ($this->roles_id == 1) {
+        if ($this->role_id == 1) {
             return true;
         } else {
             return false;
@@ -55,7 +56,7 @@ class User extends Authenticatable
 
     public function isUser()
     {
-        if ($this->roles_id == 2) {
+        if ($this->role_id == 2) {
             return true;
         } else {
             return false;
