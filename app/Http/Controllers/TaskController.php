@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -19,21 +20,35 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
+        if(Auth::user()->isAdmin()){
 
-        $search = $request->search;
+            $tasks = DB::table('tasks as tas')
+            ->join('users as us', 'tas.user_id', '=', 'us.id')           
+            ->select('tas.*', 'us.name', 'us.last_name')            
+            ->get();
 
-        $tasks = Task::orderBy('id','desc')
+        }else{
+
+            $tasks = Task::whereUserId(Auth::user()->id)->orderBy('id','desc')->get();
+        }
+        $tasks->toJson();
         
-        ->where([['task', 'LIKE', '%' . $search . '%'],['user_id',  '=',Auth::User()->id]])
-        ->orwhere([['description', 'LIKE', '%' . $search . '%'],['user_id',  '=',Auth::User()->id]])
-        ->get();
+         return view('tasks.index', compact('tasks'));
+    }
 
-   
+    public function create()
+    {
+        return view('tasks.create');
+       
+    }
 
-// dd('sd');
-        return $tasks; 
+    public function edit(Task $task)
+    {
+        // dd($user);
+        return view('tasks.edit', compact('task'));
+       
     }
 
     /**
@@ -53,7 +68,9 @@ class TaskController extends Controller
         $task->finished            =  $request->finished;
         $task->save();
 
-        return "guardada";
+        return redirect()
+    	->route('tasks.index')
+    	->with('info', 'Tarea Creada con Exito');
     }
     
     /**
@@ -76,16 +93,20 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        // $task->update($request->all());
+        $task->update($request->all());
 
-        $taska = Task::find($task->id);
-        $taska->task                =  $request->task;
-        $taska->description         =  $request->description;
-        // $taska->date                =  now();
-        $taska->expiration_date     =  $request->expiration_date;
-        // $taska->user_id             =  Auth::user()->id;
-        $taska->finished            =  $request->finished;
-        $taska->save();
+        // $taska = Task::find($task->id);
+        // $taska->task                =  $request->task;
+        // $taska->description         =  $request->description;
+        // // $taska->date                =  now();
+        // $taska->expiration_date     =  $request->expiration_date;
+        // // $taska->user_id             =  Auth::user()->id;
+        // $taska->finished            =  $request->finished;
+        // $taska->save();
+
+        return redirect()
+    	->route('tasks.index')
+    	->with('info', 'Tarea Actualizada con Exito!!!');
 
     }
 
@@ -99,5 +120,8 @@ class TaskController extends Controller
     {
        
         $task->delete();
+        return redirect()
+    	->route('tasks.index')
+    	->with('info', 'Tarea Eliminada correctamente.');
     }
 }
