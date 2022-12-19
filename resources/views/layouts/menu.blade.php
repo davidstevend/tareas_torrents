@@ -8,10 +8,13 @@
             <li class=" nav-item"><a href="{{ route('home') }}"><i class="la la-home"></i><span class="menu-title"
                         data-i18n="nav.support_raise_support.main">Home</span></a>
             </li>
+            @if(Auth::user()->isAdmin())
             <li class=" nav-item"><a href="{{ url('users') }}"><i class="la la-user"></i><span class="menu-title"
                         data-i18n="nav.support_raise_support.main">Users</span></a>
             </li>
-            <li class=" nav-item"><a href="{{ url('task') }}"><i class="la la-user"></i><span class="menu-title"
+            @endif
+
+            <li class=" nav-item"><a href="{{ url('tasks') }}"><i class="la la-user"></i><span class="menu-title"
                         data-i18n="nav.support_raise_support.main">Task</span></a>
             </li>
         </ul>
