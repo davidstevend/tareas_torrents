@@ -19,6 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'phone',
+        'role_id',
         'email',
         'password',
     ];
@@ -41,4 +44,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        if ($this->role_id == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isUser()
+    {
+        if ($this->role_id == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

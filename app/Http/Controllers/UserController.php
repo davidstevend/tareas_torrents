@@ -20,15 +20,26 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $search = $request->search;
+        // $search = $request->search;
 
 
-        $users = User::where('name', 'LIKE', '%' . $search . '%')
-            ->orwhere('email', 'LIKE', '%' . $search . '%')
+        // $users = User::where('name', 'LIKE', '%' . $search . '%')
+        //     ->orwhere('last_name', 'LIKE', '%' . $search . '%')
+        //     ->orwhere('email', 'LIKE', '%' . $search . '%')
+        //     ->orderBy('id', 'ASC')
+        //     ->get();
+
+        $users = User::select('id','name','last_name','phone','email','status')
             ->orderBy('id', 'ASC')
             ->get();
 
-        return $users;
+            $users->toJson();
+           
+      
+
+        // return $users;
+        return view('users.index', compact('users'));
+
     }
 
     /**
@@ -37,15 +48,33 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function create()
+    {
+        return view('users.create');
+       
+    }
+
+    public function edit(User $user)
+    {
+        // dd($user);
+        return view('users.edit', compact('user'));
+       
+    }
     public function store(Request $request)
     {
         $User = new User;
+        $User->role_id             =  1; // role_id (1) por defecto en la aplicacion es (Admin) - (2) (Usuario)
         $User->name                =  $request->name;
+        $User->last_name           =  $request->last_name;
+        $User->phone               =  $request->phone;
         $User->email               =  $request->email;       
-        $User->password            =  Hash::make($request['password']);     
+        $User->password            =  Hash::make('12345678');     
+        $User->status              =  $request->status;       
         $User->save();
 
-        return "Creado con exito";
+        return redirect()
+    	->route('users.index')
+    	->with('info', 'Usuario creado con Exito; Clave temporal ( 12345678 )');
        
     }
 
@@ -73,9 +102,16 @@ class UserController extends Controller
 
         $Usera = User::find($User->id);
         $User->name                =  $request->name;
+        $User->last_name           =  $request->last_name;       
+        $User->phone               =  $request->phone;       
         $User->email               =  $request->email;       
-        $User->password            =  Hash::make($request['password']);     
+        $User->status              =  $request->status;       
+        // $User->password            =  Hash::make($request['password']);     
         $User->save();
+
+        return redirect()
+    	->route('users.index')
+    	->with('info', 'Usuario Actualizado con Exito!!!');
 
     }
 
@@ -88,6 +124,11 @@ class UserController extends Controller
     public function destroy(User $User)
     {
 
-        $User->delete();
+        $User->status = FALSE;
+        $User->save();
+
+        return redirect()
+    	->route('users.index')
+    	->with('info', 'Usuario Desactivado con Exito!!!');
     }
 }
