@@ -8,9 +8,14 @@ Prueba tecnica en laravel
 
 
 - descargue repositorio de git-hub.
+- ejecute en linea de comandos (composer install).
+
 - importe la Base de datos que se encuentra en la carpeta "BD".
 - configure el archivo .env
-- ejecute en linea de comandos (composer install).
+- (opcion 2) - ejecute migraciones
+-- en linea de comandos:
+--- php artisan migrate:install
+--- php artisan migrate:refresh --seed (ejecuta migraciones y seeders)
 
 ## APLICACIÒN DESPLEGADA
 se subio la aplicacion en un servidor compartido, para ingresar debe acceder al siguiente link:
