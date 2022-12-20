@@ -9,7 +9,8 @@ use Tests\TestCase;
 class LoginTest extends TestCase
 {
 
-    /** test */
+    
+   /** @test */
     public function it_visit_page_of_login()
     {
         $this->get('/login')
